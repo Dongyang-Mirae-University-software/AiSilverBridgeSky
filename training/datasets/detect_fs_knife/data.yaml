@@ -1,0 +1,8 @@
+path: /home/apps/SilverBridgeSky/AiSilverBridgeSky/training/datasets/detect_fs_knife
+train: images/train
+val: images/val
+
+names:
+  0: fire
+  1: smoke
+  2: knife

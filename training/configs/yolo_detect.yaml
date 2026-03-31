@@ -1,0 +1,8 @@
+# YOLO 학습 하이퍼파라미터 템플릿 (추후 Ultralytics 형식에 맞게 조정)
+epochs: 100
+imgsz: 640
+batch: 16
+device: "0"
+model: "yolo26n.pt"
+
+# TODO: datasets/detect/data.yaml 경로 연결

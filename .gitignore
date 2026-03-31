@@ -1,0 +1,17 @@
+# 가상환경
+.venv/
+venv/
+env/
+
+# Python 캐시·바이트코드
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 학습 데이터셋: 대용량 파일은 제외, 폴더·메타만 추적
+# (Git은 빈 디렉터리를 커밋할 수 없으므로, 뼈대는 .gitkeep / data.yaml 로 유지)
+training/datasets/**
+!training/datasets/**/
+!training/datasets/**/.gitkeep
+!training/datasets/**/data.yaml
+!training/datasets/**/README.md
