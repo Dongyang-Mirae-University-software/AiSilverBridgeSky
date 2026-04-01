@@ -1,7 +1,10 @@
+# API server (run.py/app.main)
 fastapi==0.115.6
 uvicorn[standard]==0.32.1
-pydantic==2.10.3
+pydantic>=2.11.0
 python-dotenv==1.0.1
+
+# CV / inference
 numpy>=1.26.0,<3
 opencv-python>=4.8.0
 ultralytics>=8.3.0
