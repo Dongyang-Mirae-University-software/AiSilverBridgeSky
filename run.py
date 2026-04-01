@@ -56,8 +56,8 @@ def build_parser() -> argparse.ArgumentParser:
         "-m",
         "--model",
         type=str,
-        default="/home/apps/SilverBridgeSky/AiSilverBridgeSky/training/runs/fire_smoke_yolo26/weights/best.pt",
-        help="MODEL_PATH override",
+        default=None,
+        help="MODEL_PATH override (기본: .env/.env.example 값 사용)",
     )
     p.add_argument(
         "--camera-paths",
@@ -78,7 +78,8 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> None:
     args = build_parser().parse_args()
 
-    os.environ["MODEL_PATH"] = args.model
+    if args.model is not None and str(args.model).strip():
+        os.environ["MODEL_PATH"] = str(args.model).strip()
     os.environ["CAMERA_HOST"] = str(args.camera_host)
     os.environ["CAMERA_PORT"] = str(args.camera_port)
     os.environ["CAMERA_PATH_CANDIDATES"] = str(args.camera_paths)
