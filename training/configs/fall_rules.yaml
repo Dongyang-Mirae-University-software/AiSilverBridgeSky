@@ -1,4 +1,0 @@
-# 낙상 이벤트 스코어·룰 (서비스 event_engine 과 정합 예정)
-fall_score_threshold: 0.70
-min_person_frames: 3
-# TODO: 키포인트 각도·속도 임계값 등
