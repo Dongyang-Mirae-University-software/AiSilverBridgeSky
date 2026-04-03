@@ -38,7 +38,11 @@ class StreamService:
         dets, ann, _meta = self._detection.get_latest_for_api()
         frame = ann if ann is not None else raw
         if frame is None:
-            ph = make_text_placeholder_bgr("NO FRAME\n(camera disconnected)", self._settings.FRAME_WIDTH, self._settings.FRAME_HEIGHT)
+            if int(self._settings.DISPLAY_MODE) == 2:
+                msg = "NO FRAME\n(screen capture — no camera)"
+            else:
+                msg = "NO FRAME\n(camera disconnected)"
+            ph = make_text_placeholder_bgr(msg, self._settings.FRAME_WIDTH, self._settings.FRAME_HEIGHT)
             jpeg = encode_jpeg_bgr(ph, self._settings.JPEG_QUALITY)
             return jpeg or b"", "image/jpeg"
         jpeg = encode_jpeg_bgr(frame, self._settings.JPEG_QUALITY)
@@ -55,8 +59,9 @@ class StreamService:
                 _, ann, _ = self._detection.get_latest_for_api()
                 frame: np.ndarray | None = ann if ann is not None else raw
                 if frame is None:
+                    label = "NO FRAME (screen)" if int(self._settings.DISPLAY_MODE) == 2 else "NO FRAME"
                     frame = make_text_placeholder_bgr(
-                        "NO FRAME",
+                        label,
                         self._settings.FRAME_WIDTH,
                         self._settings.FRAME_HEIGHT,
                     )

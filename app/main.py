@@ -51,10 +51,14 @@ async def lifespan(app: FastAPI):
     except Exception as e:  # noqa: BLE001
         _LOG.exception("모델 로드 단계 예외(무시하고 기동): %s", e)
 
-    try:
-        camera.start()
-    except Exception as e:  # noqa: BLE001
-        _LOG.exception("카메라 시작 예외(무시하고 기동): %s", e)
+    # DISPLAY_MODE=2: 화면 캡처(mss)만 사용 — DroidCam 등 카메라 연결 불필요
+    if int(settings.DISPLAY_MODE) == 2:
+        _LOG.info("DISPLAY_MODE=2 — 카메라 스트림을 시작하지 않음(화면 갈무리 추론)")
+    else:
+        try:
+            camera.start()
+        except Exception as e:  # noqa: BLE001
+            _LOG.exception("카메라 시작 예외(무시하고 기동): %s", e)
 
     try:
         inference_loop.start()
@@ -67,10 +71,11 @@ async def lifespan(app: FastAPI):
         inference_loop.stop()
     except Exception as e:  # noqa: BLE001
         _LOG.exception("추론 루프 중지 예외: %s", e)
-    try:
-        camera.stop()
-    except Exception as e:  # noqa: BLE001
-        _LOG.exception("카메라 중지 예외: %s", e)
+    if int(settings.DISPLAY_MODE) != 2:
+        try:
+            camera.stop()
+        except Exception as e:  # noqa: BLE001
+            _LOG.exception("카메라 중지 예외: %s", e)
     _LOG.info("서버 종료 처리 완료")
 
 
