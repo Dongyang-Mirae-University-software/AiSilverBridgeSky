@@ -4,6 +4,7 @@
 
 예시:
   python3 run.py -d 1 -h 192.168.0.18 -p 4747 -P 8000
+  python3 run.py -d 2 -P 8000   # 화면 캡처만 (카메라 없이 로컬 테스트)
 """
 
 from __future__ import annotations
@@ -29,7 +30,7 @@ def build_parser() -> argparse.ArgumentParser:
         type=int,
         default=0,
         choices=[0, 1, 2],
-        help="display mode: 0=off, 1=window, 2=screen-capture",
+        help="0=카메라 추론만(창 없음), 1=카메라+OpenCV 창, 2=화면캡처 추론(카메라 미사용·DroidCam 불필요)",
     )
     p.add_argument(
         "-h",
@@ -56,8 +57,8 @@ def build_parser() -> argparse.ArgumentParser:
         "-m",
         "--model",
         type=str,
-        default="/home/apps/SilverBridgeSky/AiSilverBridgeSky/training/runs/fire_smoke_yolo26/weights/best.pt",
-        help="MODEL_PATH override",
+        default=None,
+        help="MODEL_PATH override (기본: .env/.env.example 값 사용)",
     )
     p.add_argument(
         "--camera-paths",
